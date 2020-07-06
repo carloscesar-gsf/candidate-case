@@ -17,7 +17,6 @@ import java.util.Optional;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
-@Schema(name = "CreditCardFilter")
 public class CreditCardFilter extends BaseFilter<CreditCard> {
 
     private static final long serialVersionUID = -487841120761067676L;

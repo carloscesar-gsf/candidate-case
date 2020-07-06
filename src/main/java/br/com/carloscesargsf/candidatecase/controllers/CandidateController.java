@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,9 +32,11 @@ public class CandidateController extends BaseController {
 
     @GetMapping
     @Operation(summary = "Returns a list of candidates.",
-            description = "Returns a list of candidates."
+            description = "Returns a list of candidates.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "200", description = "Returned the list of candidates.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<PaginatedItemsDTO<CandidateListItemDTO>> findAll(@Valid CandidateFilter filters) {
         logCurrentMethodExecution(filters);
 
@@ -41,9 +45,11 @@ public class CandidateController extends BaseController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Returns a candidate.",
-            description = "Returns a candidate."
+            description = "Returns a candidate.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "200", description = "Returned the candidate.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CandidateDTO> findById(@Parameter(description = "ID of a candidate", required = true, example = "1", in = ParameterIn.PATH)
                                                  @PathVariable Long id) {
         logCurrentMethodExecution(id);
@@ -53,9 +59,11 @@ public class CandidateController extends BaseController {
 
     @PostMapping
     @Operation(summary = "Creates a candidate.",
-            description = "Creates a candidate and return it."
+            description = "Creates a candidate and return it.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "201", description = "Candidate created.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CandidateDTO> create(@RequestBody @Valid CandidateCreateDTO candidateCreateDTO) {
         logCurrentMethodExecution(candidateCreateDTO);
 
@@ -72,9 +80,11 @@ public class CandidateController extends BaseController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Updates a candidate.",
-            description = "Updates a candidate."
+            description = "Updates a candidate.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "204", description = "Candidate updated.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity update(@Parameter(description = "ID of the candidate to be updated.", required = true, example = "1", in = ParameterIn.PATH)
                                  @PathVariable Long id,
                                  @RequestBody @Valid CandidateUpdateDTO candidateUpdateDTO) {
@@ -101,9 +111,11 @@ public class CandidateController extends BaseController {
 
     @GetMapping("/{id}/credit-cards")
     @Operation(summary = "Returns a list of candidate's credit cards.",
-            description = "Returns a list of candidate's credit cards."
+            description = "Returns a list of candidate's credit cards.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "200", description = "Returned the list of candidate's credit cards.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<PaginatedItemsDTO<CreditCardListItemDTO>> findAllCreditCards(@Parameter(description = "ID of the candidate.", required = true, example = "1", in = ParameterIn.PATH)
                                                                                        @PathVariable Long id,
                                                                                        @Valid CreditCardFilter filters) {
@@ -114,9 +126,11 @@ public class CandidateController extends BaseController {
 
     @GetMapping("/{id}/credit-cards/{creditCardId}")
     @Operation(summary = "Returns a credit card for a candidate.",
-            description = "Returns a credit card for a candidate."
+            description = "Returns a credit card for a candidate.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "200", description = "Returned a credit cards for a candidate.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CreditCardDTO> findCreditCardById(@Parameter(description = "ID of the candidate.", required = true, example = "1", in = ParameterIn.PATH)
                                                             @PathVariable Long id,
                                                             @Parameter(description = "ID of the candidate's credit card.", required = true, example = "1", in = ParameterIn.PATH)
@@ -128,9 +142,11 @@ public class CandidateController extends BaseController {
 
     @PostMapping("/{id}/credit-cards")
     @Operation(summary = "Creates a credit card for a candidate.",
-            description = "Creates a credit card for a candidate and return it."
+            description = "Creates a credit card for a candidate and return it.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "201", description = "Credit card created.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CreditCardDTO> createCreditCard(@Parameter(description = "ID of the candidate.", required = true, example = "1", in = ParameterIn.PATH)
                                                           @PathVariable Long id,
                                                           @RequestBody @Valid CandidateCreditCardCreateDTO candidateCreditCardCreateDTO) {
@@ -149,9 +165,11 @@ public class CandidateController extends BaseController {
 
     @DeleteMapping("/{id}/credit-cards/{creditCardId}")
     @Operation(summary = "Deletes a candidate's credit card.",
-            description = "Deletes a candidate's credit card."
+            description = "Deletes a candidate's credit card.",
+            security = {@SecurityRequirement(name = "basic")}
     )
     @ApiResponse(responseCode = "204", description = "Credit card deleted.")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity deleteCreditCardById(@Parameter(description = "ID of the candidate.", required = true, example = "1", in = ParameterIn.PATH)
                                                @PathVariable Long id,
                                                @Parameter(description = "ID of the credit card to be deleted.", required = true, example = "1", in = ParameterIn.PATH)

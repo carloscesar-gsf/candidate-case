@@ -1,9 +1,11 @@
 package br.com.carloscesargsf.candidatecase.configurations;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,28 +26,10 @@ public class OpenAPIConfiguration {
                         .contact(new Contact()
                                 .name("Carlos César Gomes dos Santos Filho")
                                 .email("carloscesar.gsf@gmail.com")
-                                .url("https://www.linkedin.com/in/carloscesargsf/")));
+                                .url("https://www.linkedin.com/in/carloscesargsf/")))
+                .components(new Components()
+                        .addSecuritySchemes("basic",
+                                new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic").in(SecurityScheme.In.HEADER)));
     }
-
-//    @Bean
-//    public GroupedOpenApi CandidateCaseOpenAPI() {
-//        return GroupedOpenApi.builder()
-//                .group("Candidate Case API")
-//                .addOpenApiCustomiser(openApi -> {
-//                    openApi.getInfo()
-//                            .title("Candidate Case API")
-//                            .description("Candidate Case API endpoints.")
-//                            .version("1.0")
-//                            .license(new License()
-//                                    .name("Apache 2.0")
-//                                    .url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-//                            .termsOfService("http://example.com/terms/")
-//                            .contact(new Contact()
-//                                    .name("Carlos César Gomes dos Santos Filho")
-//                                    .email("carloscesar.gsf@gmail.com")
-//                                    .url("https://www.linkedin.com/in/carloscesargsf/"));
-//                })
-//                .build();
-//    }
 
 }
