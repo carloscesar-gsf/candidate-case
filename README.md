@@ -1,4 +1,4 @@
-# backend
+# candidate-case
 
 ## Configuring database
 
@@ -16,3 +16,10 @@ docker-compose up -d
 ## Swagger-UI
 
 * __URL:__ http://localhost:8080/swagger-ui.html
+
+## Users
+
+| User  | Password | Role  |
+|-------|----------|-------|
+| admin | admin    | admin |
+| user  | user     | user  |
