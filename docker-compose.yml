@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0.20
+    container_name: candidate-case-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_USER: "backend"
+      MYSQL_PASSWORD: "backend"
+      MYSQL_DATABASE: "backend"
+    ports:
+      - "3306:3306"
+    volumes:
+      - data-candidate-case-db:/var/lib/mysql
+
+volumes:
+  data-candidate-case-db:
