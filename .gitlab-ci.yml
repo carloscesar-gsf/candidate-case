@@ -9,6 +9,8 @@ stages:
 build:
   stage: build
   image: maven:3-openjdk-8
+  tags:
+    - aws
   artifacts:
     expire_in: 1 week
     paths:
@@ -20,6 +22,8 @@ deploy-stg:
   stage: build
   #  image: jaromirpufler/docker-openssh-client
   image: alpine:latest
+  tags:
+    - aws
   environment:
     name: staging
     url: https://candidate-case-stg.carloscesargsf.com.br/swagger-ui.html
