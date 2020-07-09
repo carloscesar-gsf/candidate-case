@@ -19,7 +19,9 @@ build:
     - mvn clean package
 
 deploy-stg:
-  stage: build
+  stage: deploy
+  dependencies:
+    - build
   #  image: jaromirpufler/docker-openssh-client
   image: alpine:latest
   tags:
