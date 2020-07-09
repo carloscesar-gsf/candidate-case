@@ -1,0 +1,49 @@
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: maven:3-openjdk-8
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - target/
+  script:
+    - mvn clean package
+
+deploy-stg:
+  stage: build
+  #  image: jaromirpufler/docker-openssh-client
+  image: alpine:latest
+  environment:
+    name: staging
+    url: https://candidate-case-stg.carloscesargsf.com.br/swagger-ui.html
+  #  variables:
+  #    SSH_DEPLOY_KEY: $SSH_DEPLOY_KEY_STG
+  script:
+    - replace_files_variables "STG"
+    - cat docker/.env
+    - ls -liah target/
+
+    # BEGIN Custom Functions -------------------------------------------------------
+.custom_functions: &custom_functions |
+  function replace_files_variables() {
+    VAR_LIST=(
+      "DB_HOST"
+      "DB_PORT"
+      "DB_DATABASE"
+      "DB_USERNAME"
+      "DB_PASSWORD"
+    )
+
+    for VAR_ITEM in "${VAR_LIST[@]}"; do
+      ENV_VAR="${VAR_ITEM}_${1}";
+      sed -i 's/'"_${VAR_ITEM}_"'/'"${!ENV_VAR}"'/g' docker/.env;
+    done
+  }
+# END Custom Functions ---------------------------------------------------------
