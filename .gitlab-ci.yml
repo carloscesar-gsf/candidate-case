@@ -32,7 +32,7 @@ build:
   artifacts:
     expire_in: 1 week
     paths:
-      - target/
+      - target/candidate-case-api.jar
   script:
     - mvn clean package -Dspring.profiles.active=test
 
