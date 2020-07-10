@@ -16,7 +16,7 @@ build:
     paths:
       - target/
   script:
-    - mvn clean package
+    - mvn clean package -Dspring.profiles.active=test
 
 deploy-stg:
   stage: deploy
