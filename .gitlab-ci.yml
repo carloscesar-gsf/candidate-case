@@ -40,18 +40,24 @@ deploy-stg:
   stage: deploy
   dependencies:
     - build
-  #  image: jaromirpufler/docker-openssh-client
-  image: bash:latest
+  image: jaromirpufler/docker-openssh-client
   tags:
     - aws
   environment:
     name: staging
     url: https://candidate-case-stg.carloscesargsf.com.br/swagger-ui.html
-  #  variables:
-  #    SSH_DEPLOY_KEY: $SSH_DEPLOY_KEY_STG
   before_script:
     - *custom_functions
   script:
     - replace_files_variables
     - cat docker/.env
     - ls -liah target/
+    - scp target/candidate-case-api.jar docker/Dockerfile docker/.env ubuntu@172.31.41.231
+    - ssh ubuntu@172.31.41.231 /bin/bash <<'EOT'
+    - docker system prune -f
+    - docker build -t candidate-case-api .
+    - docker stop candidate-case-api
+    - docker rm candidate-case-api
+    #- docker run -d --restart unless-stopped --name=candidate-case-api -p80:8080 --env-file=.env candidate-case-api
+    - docker images
+    - EOT
