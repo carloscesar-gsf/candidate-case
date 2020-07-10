@@ -10,7 +10,7 @@
     )
 
     for VAR_ITEM in "${VAR_LIST[@]}"; do
-      ENV_VAR="${VAR_ITEM}_${1}";
+      ENV_VAR="${VAR_ITEM}";
       sed -i 's/'"_${VAR_ITEM}_"'/'"${!ENV_VAR}"'/g' docker/.env;
     done
   }
@@ -52,6 +52,6 @@ deploy-stg:
   before_script:
     - *custom_functions
   script:
-    - replace_files_variables "STG"
+    - replace_files_variables
     - cat docker/.env
     - ls -liah target/
