@@ -1,4 +1,4 @@
-# BEGIN Custom Functions -------------------------------------------------------
+# Custom Functions -------------------------------------------------------
 .custom_functions: &custom_functions |
   function replace_files_variables() {
     VAR_LIST=(
@@ -14,7 +14,7 @@
       sed -i 's/'"_${VAR_ITEM}_"'/'"${!ENV_VAR}"'/g' docker/.env;
     done
   }
-# END Custom Functions ---------------------------------------------------------
+# END Custom Functions -------------------------------------------------------
 
 cache:
   paths:
@@ -41,7 +41,7 @@ deploy-stg:
   dependencies:
     - build
   #  image: jaromirpufler/docker-openssh-client
-  image: alpine:latest
+  image: bash:latest
   tags:
     - aws
   environment:
