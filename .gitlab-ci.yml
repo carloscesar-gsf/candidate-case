@@ -40,7 +40,7 @@ deploy-stg:
   stage: deploy
   dependencies:
     - build
-  image: jaromirpufler/docker-openssh-client
+  image: carloscesargsf/docker-openssh-client
   tags:
     - aws
   environment:
