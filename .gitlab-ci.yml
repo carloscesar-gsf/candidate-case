@@ -1,3 +1,21 @@
+# BEGIN Custom Functions -------------------------------------------------------
+.custom_functions: &custom_functions |
+  function replace_files_variables() {
+    VAR_LIST=(
+      "DB_HOST"
+      "DB_PORT"
+      "DB_DATABASE"
+      "DB_USERNAME"
+      "DB_PASSWORD"
+    )
+
+    for VAR_ITEM in "${VAR_LIST[@]}"; do
+      ENV_VAR="${VAR_ITEM}_${1}";
+      sed -i 's/'"_${VAR_ITEM}_"'/'"${!ENV_VAR}"'/g' docker/.env;
+    done
+  }
+# END Custom Functions ---------------------------------------------------------
+
 cache:
   paths:
     - .m2/repository
@@ -32,26 +50,8 @@ deploy-stg:
   #  variables:
   #    SSH_DEPLOY_KEY: $SSH_DEPLOY_KEY_STG
   before_script:
-    - custom_functions
+    - *custom_functions
   script:
     - replace_files_variables "STG"
     - cat docker/.env
     - ls -liah target/
-
-    # BEGIN Custom Functions -------------------------------------------------------
-.custom_functions: &custom_functions |
-  function replace_files_variables() {
-    VAR_LIST=(
-      "DB_HOST"
-      "DB_PORT"
-      "DB_DATABASE"
-      "DB_USERNAME"
-      "DB_PASSWORD"
-    )
-
-    for VAR_ITEM in "${VAR_LIST[@]}"; do
-      ENV_VAR="${VAR_ITEM}_${1}";
-      sed -i 's/'"_${VAR_ITEM}_"'/'"${!ENV_VAR}"'/g' docker/.env;
-    done
-  }
-# END Custom Functions ---------------------------------------------------------
