@@ -51,10 +51,7 @@ deploy-stg:
   script:
     - replace_files_variables
     - cat docker/.env
-    - ls -liah target/
-    - ls -liah docker/
-    - ls -liah
-    - scp target/candidate-case-api.jar docker/Dockerfile docker/.env ec2-user@172.31.41.231
+    - scp target/candidate-case-api.jar docker/Dockerfile docker/.env ec2-user@172.31.41.231:~/
     - ssh ec2-user@172.31.41.231 /bin/bash <<'EOT'
     - docker system prune -f
     - docker build -t candidate-case-api .
