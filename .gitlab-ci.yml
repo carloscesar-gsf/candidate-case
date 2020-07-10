@@ -31,6 +31,8 @@ deploy-stg:
     url: https://candidate-case-stg.carloscesargsf.com.br/swagger-ui.html
   #  variables:
   #    SSH_DEPLOY_KEY: $SSH_DEPLOY_KEY_STG
+  before_script:
+    - custom_functions
   script:
     - replace_files_variables "STG"
     - cat docker/.env
