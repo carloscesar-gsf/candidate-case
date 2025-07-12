@@ -20,7 +20,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <org.apache.commons..commons-lang3.version>3.10</org.apache.commons..commons-lang3.version>
+        <org.apache.commons..commons-lang3.version>3.18.0</org.apache.commons..commons-lang3.version>
         <org.springdoc..springdoc-openapi-ui.version>1.4.3</org.springdoc..springdoc-openapi-ui.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
